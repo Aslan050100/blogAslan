@@ -1,0 +1,20 @@
+<nav class="blog-pagination" style="position: absolute;bottom: 0;">
+    {% if page_obj.has_previous %}
+        <a class="btn btn-outline-primary"
+           href="{{ request.path }}?page={{ page_obj.previous_page_number }}">&laquo;</a>
+    {% else %}
+        <a class="btn btn-outline-primary disabled">&laquo;</a>
+    {% endif %}
+    {% for page_number in paginator.page_range %}
+        {% if page_number != page_obj.number %}
+            <a class="btn btn-outline-secondary " href="{{ request.path }}?page={{ page_number }}">{{ page_number }}</a>
+        {% else %}
+            <a class="btn btn-outline-secondary active">{{ page_number }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <a class="btn btn-outline-primary" href="{{ request.path }}?page={{ page_obj.next_page_number }}">&raquo;</a>
+    {% else %}
+        <a class="btn btn-outline-primary disabled">&raquo;</a>
+    {% endif %}
+</nav>

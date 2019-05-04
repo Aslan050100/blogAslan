@@ -1,0 +1,49 @@
+<div class="blog-comments">
+    <h2 id="publish">Comments</h2>
+    <hr>
+    <!-- a comment form created by ModelFrom module -->
+    <div id="respond" class="comment-respond">
+        <h3>Leave a message</h3>
+        <form action="{% url 'blog:comment' post.id %}" method="post" id="commentform" class="comment-form">
+            <!-- hidden element, used to record replied user. -->
+            <p class="comment-notes"><span id="email-notes">Your email address will not be published.</span>
+                Required fields are marked <span class="required">*</span></p>
+            {% csrf_token %}
+            <div class="form-group comment-form-author">{{ comment_form.name }}</div>
+            <div class="form-group comment-form-email">{{ comment_form.email }}</div>
+            <div class="form-group comment-form-comment">{{ comment_form.content }}</div>
+            <div class="form-group comment-form-comment">
+                <input type="hidden" id="reply" name="reply" value="0">
+            </div>
+            <p class="form-submit">
+                <input name="submit" type="submit" id="submit_comment" class="submit" value="Post Comment">
+            </p>
+
+            <!-- message flash block-->
+            {% include 'blog/messages.html' %}
+        </form>
+    </div>
+    <hr>
+    {% for comment in comment_list %}
+        {% if comment.reply is None %}  <!-- if no replay, then its a parent comment -->
+            <div class="parent-comment">
+                <p class="comment-nav">{{ comment.name }} ({{ comment.posted_time }})</p>
+                <div class="comment-content" style="position: relative;">{{ comment.content|safe }}
+                    <a href="#publish" style="position: absolute; right: 0;bottom: 0;"
+                       onclick="reply('{{ comment.name }}',{{ comment.id }})">reply</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="children-comment">
+                <p class="comment-nav">{{ comment.name }} >>> {{ comment.reply.name }}
+                    ({{ comment.posted_time }})</p>
+                <div class="comment-content" style="position: relative;">{{ comment.content|safe }}
+                    <a href="#publish" style="position: absolute; right: 0;bottom: 0;"
+                       onclick="reply('{{ comment.name }}',{{ comment.id }})">reply</a>
+                </div>
+            </div>
+        {% endif %}
+    {% empty %}
+        <a>No comments yet!</a>
+    {% endfor %}
+</div>

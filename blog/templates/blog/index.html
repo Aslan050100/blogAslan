@@ -1,0 +1,11 @@
+{% extends 'blog/base.html' %}
+{% block title %}Eddy's Blog{% endblock %}
+{% block main_content %}
+    <h3 class="pb-3 mb-4 font-italic border-bottom">Recent Post</h3>
+    {% for post in page_obj.object_list %}
+        {% include 'blog/post_list_body.html' %}
+    {% empty %}
+        <h3> No posts yet!</h3>
+    {% endfor %}
+    {% include 'blog/paginator.html' %}
+{% endblock %}

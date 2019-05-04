@@ -1,0 +1,8 @@
+<div class="blog-post">
+    {% url 'blog:article' post.id as post_id %}
+    <h3 class="blog-post-title"><a href="{{ post_id }}">{{ post.title|title|safe }}</a></h3>
+    <p class="blog-post-meta">{{ post.posted_time }} by <a href="#">{{ post.author }}</a></p>
+    <p>{{ post.content|truncatechars_html:200|striptags }}</p>
+    <a href="{{ post_id }}">Read >></a>
+</div>
+<hr class="featurette-divider">

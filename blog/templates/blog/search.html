@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+{% block title %}Search{% endblock %}
+{% block main_content %}
+    {% if key %}
+        <h3 class="pb-3 mb-4 font-italic border-bottom">Search for "{{ key }}":</h3>
+        {% for post in page_obj.object_list %}
+            {% include 'blog/post_list_body.html' %}
+        {% empty %}
+            <h3>No post about "{{ key }}" !</h3>
+        {% endfor %}
+        {% include 'blog/paginator.html' %}
+    {% else %}
+        <h3>Do you search for:</h3>
+        <hr>
+        <div class="blog-category">
+            <p>Categories:
+                {% for category in categories %}
+                    <a href="{% url 'blog:category' category.id %}">{{ category }}</a>
+                {% empty %}
+                    <a>No categories yet!</a>
+                {% endfor %}</p>
+        </div>
+        <div class="blog-tag">
+            <p>Tags:
+                {% for tag in tags %}
+                    <a href="#">{{ tag }}</a>
+                    {% if not forloop.last %}
+                        |
+                    {% endif %}
+                {% empty %}
+                    <a>No tags yet!</a>
+                {% endfor %}
+            </p>
+        </div>
+        {% load static %}
+        <img class="" src="{% static 'blog/images/background copy.gif' %}" style="width: 100%; height: auto">
+    {% endif %}
+{% endblock %}

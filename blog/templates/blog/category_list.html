@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+{% block title %}All Categories{% endblock %}
+{% block main_content %}
+    <h3 class="pb-3 mb-4 font-italic border-bottom">All Categories</h3>
+    {% for category in category_list %}
+        <div class="blog-post">
+            <h4 class="blog-post-title"><a href="{% url 'blog:category' category.id %}">{{ category.name|title }}</a>
+            </h4>
+        </div>
+        <hr>
+    {% empty %}
+        <h3> No category yet!</h3>
+    {% endfor %}
+    {% include 'blog/paginator.html' %}
+{% endblock %}

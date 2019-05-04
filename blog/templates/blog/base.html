@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <!-- Custom CSS  -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/blog.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/highlights/native.css' %}">
+    <!-- block title -->
+    <title>Aslan Aitkulov</title>
+</head>
+<body onload="onload()">
+<!-- navigation block -->
+{% include 'blog/nav.html' %}
+<!-- main block -->
+<main role="main" class="container">
+    <div class="row" style="padding-top: 40px">
+        <div class="col-md-8 blog-main">
+            {% block main_content %}This is main content!{% endblock %}
+        </div>
+        {% include 'blog/sidebar.html' %}
+    </div>
+    <hr class="featurette-divider">
+    <!-- footer block -->
+    {% include 'blog/bottom.html' %}
+</main>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<!-- markdown support -->
+{% comment %}
+<!-- here is js to implement markdown in the text of articles. -->
+<!-- I don't need it because I use markdown and Pygments packages. -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.4.0/marked.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.markdown-content').each(function () {
+            var content = $(this).text()
+            console.log(content)
+            var markdown_content = marked(content)
+            console.log(markdown_content)
+            $(this).html(markdown_content)
+        })
+    })
+</script>
+{% endcomment %}
+</body>
+</html>

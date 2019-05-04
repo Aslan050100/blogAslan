@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block main_content %}
+    <h1>About information </h1>
+    <p>This is a blog which is written by myself originally for improving my programming skills! I may put some useful
+        or interesting articles, videos and music on this site. Emmm.... Maybe!</p>
+    <p>Here is a view of my project, which is the layout I designed at the beginning! </p>
+    <p>Here is a beautiful view! Enjoy it!</p>
+    {% load static %}
+    <img class="" src="{% static 'blog/images/background copy.gif' %}" style="width: 100%; height: auto">
+{% endblock %}

@@ -1,0 +1,8 @@
+{% if messages %}
+    {% for message in messages %}
+        <div class="{{ message.tag }}" id="comment_message"
+             style="margin-top: 10px;vertical-align: middle;color: green">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}

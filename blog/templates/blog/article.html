@@ -1,0 +1,65 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ post.title|title|striptags }}{% endblock %}
+{% block main_content %}
+    <!-- post block -->
+    <div class="blog-post-detail">
+        <h1 class="blog-post-title"><a>{{ object.title|title|safe }}</a></h1>
+        <p class="blog-post-meta">{{ object.posted_time }} by <a href="#">{{ object.author }}</a></p>
+        <hr>
+        <p class="markdown-content">{{ object.content|safe }}</p>
+        <hr>
+        <h3>Thanks for reading, if you find any issues, please leave a message in comment.</h3>
+        <p>If you wanna forward this post, please mark <a href="https://www.caijunjie.me/blog/">Aslan's Blog</a> >> <a
+                href="{{ request.path }}">{{ object.title|striptags }}</a></p>
+    </div>
+    <hr>
+    <div class="blog-category">
+        {% url 'blog:category' object.category.id as category_id %}
+        <p>Categories: <a href="{{ category_id }}">{{ object.category }}</a>
+        </p>
+    </div>
+    <div class="blog-tag">
+        <p>Tags:
+            {% for tag in post.tag.all %}
+                <a href="#">{{ tag }}</a>
+                {% if not forloop.last %}
+                    |
+                {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+    <!-- post link block -->
+    <div class='blog-post-link' style="margin-bottom: 1rem">
+        <p>
+            {% if previous_id %}
+                <a class="btn blog-previous"
+                   href="{% url 'blog:article' previous_id %}">Previous</a>
+            {% else %}
+                <a class="btn blog-previous">This is the first post</a>
+            {% endif %}
+
+            <a class="btn blog-overview" href="{% url 'blog:all-category' %}">Category List</a>
+
+            {% if next_id %}
+                <a class="btn blog-next" href="{% url 'blog:article' next_id %}">Next</a>
+            {% else %}
+                <a class="btn blog-next">This is the last post</a>
+            {% endif %}
+        </p>
+    </div>
+    <hr>
+    <!-- comments block -->
+    {% include 'blog/comments.html' %}
+    <script>
+        function reply(comment_name, comment_id) {
+            $('#content').attr('placeholder', 'Reply to ' + comment_name + ':');
+            $('#reply').val(comment_id)
+        }
+
+        function onload() {     // put this function in body element to load session
+            $('#name').val('{{ session.name }}');
+            $('#email').val('{{ session.email }}');
+            $('#content').val('{{ session.content }}')
+        }
+    </script>
+{% endblock %}
